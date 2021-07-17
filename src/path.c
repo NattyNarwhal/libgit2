@@ -371,4 +371,3 @@ extern int git_path_is_gitfile(
 		return -1;
 	}
 }
-
