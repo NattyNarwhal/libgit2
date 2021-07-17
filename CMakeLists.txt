@@ -78,6 +78,10 @@ if(WIN32)
 	# By default, libgit2 is built with WinHTTP.  To use the built-in
 	# HTTP transport, invoke CMake with the "-DUSE_WINHTTP=OFF" argument.
 	option(USE_WINHTTP         "Use Win32 WinHTTP routines"                         ON)
+
+	# What version of the Win32 API to target.
+	# Vista (0x0600) is default, older versions can be set with compromises in functionality.
+	SET(WIN32_TARGET_VERSION	"0x0600" CACHE STRING "The version of Win32 to target")
 endif()
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
@@ -126,6 +130,10 @@ if(BUILD_FUZZERS)
 	add_subdirectory(fuzzers)
 endif()
 
+# Ensure that MinGW provides the correct header files.
+IF (WIN32 AND NOT CYGWIN)
+	ADD_DEFINITIONS(-DWIN32 "-D_WIN32_WINNT=${WIN32_TARGET_VERSION}")
+ENDIF()
 
 # Summary
 
