@@ -147,8 +147,3 @@ else()
 		enable_warnings(format-security)
 	endif()
 endif()
-
-# Ensure that MinGW provides the correct header files.
-if(WIN32 AND NOT CYGWIN)
-	add_definitions(-DWIN32 -D_WIN32_WINNT=0x0600)
-endif()
